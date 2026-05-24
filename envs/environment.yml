@@ -1,0 +1,39 @@
+name: radigest-manuscript
+
+channels:
+  - conda-forge
+  - bioconda
+
+dependencies:
+  # Workflow runtime
+  - python=3.11
+  - pip
+  - snakemake-minimal>=9,<10
+  - conda-lock>=2,<3
+  - pyyaml>=6,<7
+
+  # radigest build/test runtime
+  - go=1.22
+  - make
+  - git
+  - rsync
+
+  # Provenance and shell utilities
+  - coreutils
+  - jq
+  - pigz
+
+  # Data analysis libraries for later workflow stages
+  - pandas>=2.2,<3
+  - numpy>=1.26,<3
+  - scipy>=1.13,<2
+  - matplotlib>=3.8,<4
+
+  # Sequencing/mapping tools reserved for later stages
+  - samtools>=1.20,<2
+  - bwa-mem2>=2.2,<3
+  - fastp>=0.24,<1
+  - bbmap>=39,<40
+
+  # Benchmarking reserved for later stages
+  - hyperfine>=1.18,<2

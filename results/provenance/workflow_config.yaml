@@ -1,0 +1,74 @@
+project:
+  name: radigest-manuscript
+  description: reproducible manuscript workflow for radigest validation and empirical
+    calibration
+  scaffold_version: 0.1.0
+  seed: 20260523
+environment:
+  conda_env_file: envs/environment.yml
+  optional_lockfile: conda-lock.yml
+software:
+  radigest:
+    source_dir: resources/software/radigest
+    executable: resources/software/radigest/bin/radigest
+    helper_screen_pairs: resources/software/radigest/bin/radigest-screen-pairs
+    helper_rank_pairs: resources/software/radigest/bin/radigest-rank-pairs
+    helper_fit_size_model: resources/software/radigest/bin/radigest-fit-size-model
+    version: v0.2.0
+    commit: 8d27bdf10e4d009a30c2c4e865a44807c6a15146
+    source_revision_file: resources/software/radigest/SOURCE_REVISION.txt
+threads:
+  radigest: 4
+  screen_jobs: 4
+  alignment: 16
+  samtools: 8
+inputs:
+  candidate_enzymes: resources/enzymes/candidate_enzymes.txt
+  expected_inputs: metadata/expected_inputs.txt
+systems:
+  trichoderma:
+    label: Trichoderma
+    reference_fasta: resources/references/trichoderma/ref.fa.gz
+    sample_manifest: metadata/trichoderma.samples.tsv
+    empirical_enzyme_pair:
+      enzyme_1: <TRICHODERMA_ENZYME_1>
+      enzyme_2: <TRICHODERMA_ENZYME_2>
+    read_length_bp: null
+    hard_size_window_bp:
+      min: null
+      max: null
+    score_range_bp:
+      min: null
+      max: null
+  salmon:
+    label: salmon
+    reference_fasta: resources/references/salmon/ref.fa.gz
+    sample_manifest: metadata/salmon.samples.tsv
+    empirical_enzyme_pair:
+      enzyme_1: <SALMON_ENZYME_1>
+      enzyme_2: <SALMON_ENZYME_2>
+    read_length_bp: null
+    hard_size_window_bp:
+      min: null
+      max: null
+    score_range_bp:
+      min: null
+      max: null
+provenance:
+  go_test_log: results/provenance/go_test.log
+  radigest_source_revision: results/provenance/radigest.source_revision.txt
+  radigest_version: results/provenance/radigest.version.txt
+  supported_enzymes: results/provenance/supported_enzymes.txt
+  input_checksums: results/provenance/input_checksums.sha256
+  workflow_config_snapshot: results/provenance/workflow_config.yaml
+  software_versions: results/provenance/software_versions.txt
+  directory_manifest: results/provenance/directory_manifest.txt
+analysis_scope:
+  digest_validation: false
+  screening: false
+  tlen_extraction: false
+  model_fitting: false
+  transfer_analysis: false
+  benchmarking: false
+  tables: false
+  figures: false

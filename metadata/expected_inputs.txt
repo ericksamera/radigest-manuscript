@@ -1,0 +1,13 @@
+# One relative path per line.
+# Existing files will be SHA256-hashed.
+# Unresolved biological inputs will be recorded as MISSING until supplied.
+config/config.yaml
+envs/environment.yml
+resources/references/trichoderma/ref.fa.gz
+resources/references/salmon/ref.fa.gz
+resources/enzymes/candidate_enzymes.txt
+metadata/trichoderma.samples.tsv
+metadata/salmon.samples.tsv
+metadata/empirical_pairs.tsv
+metadata/read_lengths.tsv
+metadata/size_windows.tsv

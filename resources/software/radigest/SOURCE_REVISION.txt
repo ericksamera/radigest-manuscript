@@ -1,0 +1,7 @@
+generated_utc	2026-05-24T05:07:50Z
+source_type	vendored_git_snapshot
+source_path	resources/software/radigest
+upstream_url	https://github.com/ericksamera/radigest
+tag	v0.2.0
+commit	8d27bdf10e4d009a30c2c4e865a44807c6a15146
+note	Nested .git directory removed; source is vendored directly in the manuscript repository.

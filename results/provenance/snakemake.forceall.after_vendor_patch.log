@@ -1,0 +1,351 @@
+Assuming unrestricted shared filesystem usage.
+host: Deoxys
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                            count
+---------------------------  -------
+conda_lock                         1
+directory_manifest                 1
+input_checksums                    1
+radigest_build_test                1
+radigest_source_revision           1
+radigest_source_tree_sha256        1
+workflow_config_snapshot           1
+radigest_version                   1
+software_versions                  1
+supported_enzymes                  1
+candidate_enzymes_check            1
+all                                1
+total                             12
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat May 23 22:14:36 2026]
+localrule radigest_build_test:
+    input: resources/software/radigest/.github/workflows/ci.yml, resources/software/radigest/.gitignore, resources/software/radigest/.prettierignore, resources/software/radigest/CITATION.cff, resources/software/radigest/LICENSE, resources/software/radigest/Makefile, resources/software/radigest/README.md, resources/software/radigest/SOURCE_REVISION.txt, resources/software/radigest/cmd/radigest/main.go, resources/software/radigest/cmd/radigest/main_fragment_fasta_test.go, resources/software/radigest/cmd/radigest/main_outputs_test.go, resources/software/radigest/cmd/radigest/main_sim_test.go, resources/software/radigest/cmd/radigest/stream_order_test.go, resources/software/radigest/cmd/radigest/validation.go, resources/software/radigest/cmd/radigest/validation_test.go, resources/software/radigest/go.mod, resources/software/radigest/internal/collector/collector.go, resources/software/radigest/internal/collector/collector_order_test.go, resources/software/radigest/internal/collector/collector_stream_test.go, resources/software/radigest/internal/collector/collector_test.go, resources/software/radigest/internal/digest/digest.go, resources/software/radigest/internal/digest/digest_edge_test.go, resources/software/radigest/internal/digest/digest_options_test.go, resources/software/radigest/internal/digest/digest_stream_test.go, resources/software/radigest/internal/digest/digest_test.go, resources/software/radigest/internal/enzyme/cmd/gen/main.go, resources/software/radigest/internal/enzyme/enzyme.go, resources/software/radigest/internal/enzyme/enzyme_curation_test.go, resources/software/radigest/internal/enzyme/enzyme_test.go, resources/software/radigest/internal/enzyme/enzymes.aliases.json, resources/software/radigest/internal/enzyme/enzymes.json, resources/software/radigest/internal/enzyme/enzymes.unsupported.json, resources/software/radigest/internal/enzyme/enzymes_generated.go, resources/software/radigest/internal/enzyme/iupac.go, resources/software/radigest/internal/enzyme/iupac_test.go, resources/software/radigest/internal/enzyme/pattern.go, resources/software/radigest/internal/enzyme/pattern_test.go, resources/software/radigest/internal/fasta/fasta.go, resources/software/radigest/internal/fasta/fasta_test.go, resources/software/radigest/internal/fasta/stdin_test.go, resources/software/radigest/internal/fragmentfasta/fragmentfasta.go, resources/software/radigest/internal/fragmentfasta/fragmentfasta_test.go, resources/software/radigest/internal/fragmenttsv/fragmenttsv.go, resources/software/radigest/internal/fragmenttsv/fragmenttsv_test.go, resources/software/radigest/internal/gff/escape.go, resources/software/radigest/internal/gff/escape_test.go, resources/software/radigest/internal/gff/gff.go, resources/software/radigest/internal/gff/gff_test.go, resources/software/radigest/internal/sim/sim.go, resources/software/radigest/internal/sim/sim_test.go, resources/software/radigest/internal/sizeselect/sizeselect.go, resources/software/radigest/internal/sizeselect/sizeselect_test.go, resources/software/radigest/scripts/README.md, resources/software/radigest/scripts/radigest-fit-size-model, resources/software/radigest/scripts/radigest-rank-pairs, resources/software/radigest/scripts/radigest-screen-pairs
+    output: results/provenance/go_test.log, resources/software/radigest/bin/radigest, resources/software/radigest/bin/radigest-screen-pairs, resources/software/radigest/bin/radigest-rank-pairs, resources/software/radigest/bin/radigest-fit-size-model
+    jobid: 1
+    reason: Forced execution
+    resources: tmpdir=/tmp
+Shell command: 
+        set -euo pipefail
+        OUT="$(pwd)/results/provenance/go_test.log"
+
+        cd "resources/software/radigest"
+
+        {
+          date -u +"generated_utc=%Y-%m-%dT%H:%M:%SZ"
+          echo "snapshot_dir=$(pwd)"
+          echo "vendored_source_version=v0.2.0"
+          echo "vendored_source_commit=8d27bdf10e4d009a30c2c4e865a44807c6a15146"
+          echo "conda_prefix=${CONDA_PREFIX:-NA}"
+          echo "python=$(command -v python3)"
+          echo "go=$(command -v go)"
+          echo "snakemake=$(command -v snakemake)"
+
+          echo
+          echo "[tool_versions]"
+          python3 --version
+          go version
+          snakemake --version
+
+          echo
+          echo "[go_env]"
+          go env
+
+          echo
+          echo "[go_generate]"
+          TMP_GEN="$(mktemp)"
+          trap 'rm -f "$TMP_GEN"' EXIT
+          cp -p internal/enzyme/enzymes_generated.go "$TMP_GEN"
+          go generate ./...
+          if ! cmp -s "$TMP_GEN" internal/enzyme/enzymes_generated.go; then
+            echo "go generate changed internal/enzyme/enzymes_generated.go" >&2
+            diff -u "$TMP_GEN" internal/enzyme/enzymes_generated.go || true
+            exit 1
+          fi
+          touch -r "$TMP_GEN" internal/enzyme/enzymes_generated.go
+          echo "go_generate_clean=OK"
+
+          echo
+          echo "[make_clean]"
+          make clean
+
+          echo
+          echo "[make_build]"
+          make VERSION="v0.2.0" build
+
+          echo
+          echo "[go_test]"
+          go test -count=1 -vet=off ./...
+        } 2>&1 | tee "$OUT"
+        
+generated_utc=2026-05-24T05:14:36Z
+snapshot_dir=/home/ericksam/radigest-manuscript/resources/software/radigest
+vendored_source_version=v0.2.0
+vendored_source_commit=8d27bdf10e4d009a30c2c4e865a44807c6a15146
+conda_prefix=/home/ericksam/.conda/envs/radigest-manuscript
+python=/home/ericksam/.conda/envs/radigest-manuscript/bin/python3
+go=/home/ericksam/.conda/envs/radigest-manuscript/bin/go
+snakemake=/home/ericksam/.conda/envs/radigest-manuscript/bin/snakemake
+
+[tool_versions]
+Python 3.11.15
+go version go1.22.12 linux/amd64
+9.21.0
+
+[go_env]
+GO111MODULE=''
+GOARCH='amd64'
+GOBIN=''
+GOCACHE='/home/ericksam/.cache/go-build'
+GOENV='/home/ericksam/.config/go/env'
+GOEXE=''
+GOEXPERIMENT=''
+GOFLAGS=''
+GOHOSTARCH='amd64'
+GOHOSTOS='linux'
+GOINSECURE=''
+GOMODCACHE='/home/ericksam/go/pkg/mod'
+GONOPROXY=''
+GONOSUMDB=''
+GOOS='linux'
+GOPATH='/home/ericksam/go'
+GOPRIVATE=''
+GOPROXY='https://proxy.golang.org,direct'
+GOROOT='/home/ericksam/.conda/envs/radigest-manuscript/go'
+GOSUMDB='sum.golang.org'
+GOTMPDIR=''
+GOTOOLCHAIN='local'
+GOTOOLDIR='/home/ericksam/.conda/envs/radigest-manuscript/go/pkg/tool/linux_amd64'
+GOVCS=''
+GOVERSION='go1.22.12'
+GCCGO='gccgo'
+GOAMD64='v1'
+AR='ar'
+CC='x86_64-conda-linux-gnu-cc'
+CXX='x86_64-conda-linux-gnu-c++'
+CGO_ENABLED='0'
+GOMOD='/home/ericksam/radigest-manuscript/resources/software/radigest/go.mod'
+GOWORK=''
+CGO_CFLAGS='-O2 -g'
+CGO_CPPFLAGS=''
+CGO_CXXFLAGS='-O2 -g'
+CGO_FFLAGS='-O2 -g'
+CGO_LDFLAGS='-O2 -g'
+PKG_CONFIG='pkg-config'
+GOGCCFLAGS='-fPIC -m64 -fno-caret-diagnostics -Qunused-arguments -Wl,--no-gc-sections -fmessage-length=0 -ffile-prefix-map=/tmp/go-build1852183451=/tmp/go-build -gno-record-gcc-switches'
+
+[go_generate]
+Select jobs to execute...
+generated enzymes_generated.go with 153 enzymes
+go_generate_clean=OK
+
+[make_clean]
+rm -rf bin
+
+[make_build]
+mkdir -p bin
+go build -trimpath -ldflags "-s -w -X main.version=v0.2.0" -o bin/radigest ./cmd/radigest
+cp scripts/radigest-screen-pairs scripts/radigest-rank-pairs scripts/radigest-fit-size-model bin/
+chmod 0755 bin/radigest bin/radigest-screen-pairs bin/radigest-rank-pairs bin/radigest-fit-size-model
+
+[go_test]
+?   	github.com/ericksamera/radigest/internal/enzyme/cmd/gen	[no test files]
+ok  	github.com/ericksamera/radigest/cmd/radigest	0.025s
+ok  	github.com/ericksamera/radigest/internal/collector	0.006s
+ok  	github.com/ericksamera/radigest/internal/digest	0.004s
+ok  	github.com/ericksamera/radigest/internal/enzyme	0.004s
+ok  	github.com/ericksamera/radigest/internal/fasta	0.027s
+ok  	github.com/ericksamera/radigest/internal/fragmentfasta	0.005s
+ok  	github.com/ericksamera/radigest/internal/fragmenttsv	0.005s
+ok  	github.com/ericksamera/radigest/internal/gff	0.004s
+ok  	github.com/ericksamera/radigest/internal/sim	0.006s
+ok  	github.com/ericksamera/radigest/internal/sizeselect	0.004s
+[Sat May 23 22:14:38 2026]
+Finished jobid: 1 (Rule: radigest_build_test)
+1 of 12 steps (8%) done
+Execute 1 jobs...
+
+[Sat May 23 22:14:38 2026]
+localrule software_versions:
+    input: workflow/scripts/write_software_versions.py, resources/software/radigest/bin/radigest, resources/software/radigest/bin/radigest-screen-pairs, resources/software/radigest/bin/radigest-rank-pairs, resources/software/radigest/bin/radigest-fit-size-model
+    output: results/provenance/software_versions.txt
+    jobid: 9
+    reason: Forced execution
+    resources: tmpdir=/tmp
+Shell command: python3 workflow/scripts/write_software_versions.py --radigest resources/software/radigest/bin/radigest --go-command go --snakemake-command snakemake --out results/provenance/software_versions.txt
+Select jobs to execute...
+[Sat May 23 22:14:41 2026]
+Finished jobid: 9 (Rule: software_versions)
+2 of 12 steps (17%) done
+Execute 1 jobs...
+
+[Sat May 23 22:14:41 2026]
+localrule supported_enzymes:
+    input: resources/software/radigest/bin/radigest
+    output: results/provenance/supported_enzymes.txt
+    jobid: 5
+    reason: Forced execution
+    resources: tmpdir=/tmp
+Shell command: resources/software/radigest/bin/radigest -list-enzymes > results/provenance/supported_enzymes.txt
+[Sat May 23 22:14:41 2026]
+Finished jobid: 5 (Rule: supported_enzymes)
+3 of 12 steps (25%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat May 23 22:14:41 2026]
+localrule candidate_enzymes_check:
+    input: workflow/scripts/check_candidate_enzymes.py, resources/enzymes/candidate_enzymes.txt, results/provenance/supported_enzymes.txt
+    output: results/provenance/candidate_enzymes.check.tsv
+    jobid: 6
+    reason: Forced execution
+    resources: tmpdir=/tmp
+Shell command: python3 workflow/scripts/check_candidate_enzymes.py --candidate resources/enzymes/candidate_enzymes.txt --supported results/provenance/supported_enzymes.txt --out results/provenance/candidate_enzymes.check.tsv
+[Sat May 23 22:14:41 2026]
+Finished jobid: 6 (Rule: candidate_enzymes_check)
+4 of 12 steps (33%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat May 23 22:14:41 2026]
+localrule radigest_source_tree_sha256:
+    input: resources/software/radigest/.github/workflows/ci.yml, resources/software/radigest/.gitignore, resources/software/radigest/.prettierignore, resources/software/radigest/CITATION.cff, resources/software/radigest/LICENSE, resources/software/radigest/Makefile, resources/software/radigest/README.md, resources/software/radigest/SOURCE_REVISION.txt, resources/software/radigest/cmd/radigest/main.go, resources/software/radigest/cmd/radigest/main_fragment_fasta_test.go, resources/software/radigest/cmd/radigest/main_outputs_test.go, resources/software/radigest/cmd/radigest/main_sim_test.go, resources/software/radigest/cmd/radigest/stream_order_test.go, resources/software/radigest/cmd/radigest/validation.go, resources/software/radigest/cmd/radigest/validation_test.go, resources/software/radigest/go.mod, resources/software/radigest/internal/collector/collector.go, resources/software/radigest/internal/collector/collector_order_test.go, resources/software/radigest/internal/collector/collector_stream_test.go, resources/software/radigest/internal/collector/collector_test.go, resources/software/radigest/internal/digest/digest.go, resources/software/radigest/internal/digest/digest_edge_test.go, resources/software/radigest/internal/digest/digest_options_test.go, resources/software/radigest/internal/digest/digest_stream_test.go, resources/software/radigest/internal/digest/digest_test.go, resources/software/radigest/internal/enzyme/cmd/gen/main.go, resources/software/radigest/internal/enzyme/enzyme.go, resources/software/radigest/internal/enzyme/enzyme_curation_test.go, resources/software/radigest/internal/enzyme/enzyme_test.go, resources/software/radigest/internal/enzyme/enzymes.aliases.json, resources/software/radigest/internal/enzyme/enzymes.json, resources/software/radigest/internal/enzyme/enzymes.unsupported.json, resources/software/radigest/internal/enzyme/enzymes_generated.go, resources/software/radigest/internal/enzyme/iupac.go, resources/software/radigest/internal/enzyme/iupac_test.go, resources/software/radigest/internal/enzyme/pattern.go, resources/software/radigest/internal/enzyme/pattern_test.go, resources/software/radigest/internal/fasta/fasta.go, resources/software/radigest/internal/fasta/fasta_test.go, resources/software/radigest/internal/fasta/stdin_test.go, resources/software/radigest/internal/fragmentfasta/fragmentfasta.go, resources/software/radigest/internal/fragmentfasta/fragmentfasta_test.go, resources/software/radigest/internal/fragmenttsv/fragmenttsv.go, resources/software/radigest/internal/fragmenttsv/fragmenttsv_test.go, resources/software/radigest/internal/gff/escape.go, resources/software/radigest/internal/gff/escape_test.go, resources/software/radigest/internal/gff/gff.go, resources/software/radigest/internal/gff/gff_test.go, resources/software/radigest/internal/sim/sim.go, resources/software/radigest/internal/sim/sim_test.go, resources/software/radigest/internal/sizeselect/sizeselect.go, resources/software/radigest/internal/sizeselect/sizeselect_test.go, resources/software/radigest/scripts/README.md, resources/software/radigest/scripts/radigest-fit-size-model, resources/software/radigest/scripts/radigest-rank-pairs, resources/software/radigest/scripts/radigest-screen-pairs
+    output: results/provenance/radigest.source_tree.sha256
+    jobid: 3
+    reason: Forced execution
+    resources: tmpdir=/tmp
+Shell command: 
+        set -euo pipefail
+        {
+          date -u +"# generated_utc	%Y-%m-%dT%H:%M:%SZ"
+          printf '# format\tsha256  project_relative_path\n'
+          for f in resources/software/radigest/.github/workflows/ci.yml resources/software/radigest/.gitignore resources/software/radigest/.prettierignore resources/software/radigest/CITATION.cff resources/software/radigest/LICENSE resources/software/radigest/Makefile resources/software/radigest/README.md resources/software/radigest/SOURCE_REVISION.txt resources/software/radigest/cmd/radigest/main.go resources/software/radigest/cmd/radigest/main_fragment_fasta_test.go resources/software/radigest/cmd/radigest/main_outputs_test.go resources/software/radigest/cmd/radigest/main_sim_test.go resources/software/radigest/cmd/radigest/stream_order_test.go resources/software/radigest/cmd/radigest/validation.go resources/software/radigest/cmd/radigest/validation_test.go resources/software/radigest/go.mod resources/software/radigest/internal/collector/collector.go resources/software/radigest/internal/collector/collector_order_test.go resources/software/radigest/internal/collector/collector_stream_test.go resources/software/radigest/internal/collector/collector_test.go resources/software/radigest/internal/digest/digest.go resources/software/radigest/internal/digest/digest_edge_test.go resources/software/radigest/internal/digest/digest_options_test.go resources/software/radigest/internal/digest/digest_stream_test.go resources/software/radigest/internal/digest/digest_test.go resources/software/radigest/internal/enzyme/cmd/gen/main.go resources/software/radigest/internal/enzyme/enzyme.go resources/software/radigest/internal/enzyme/enzyme_curation_test.go resources/software/radigest/internal/enzyme/enzyme_test.go resources/software/radigest/internal/enzyme/enzymes.aliases.json resources/software/radigest/internal/enzyme/enzymes.json resources/software/radigest/internal/enzyme/enzymes.unsupported.json resources/software/radigest/internal/enzyme/enzymes_generated.go resources/software/radigest/internal/enzyme/iupac.go resources/software/radigest/internal/enzyme/iupac_test.go resources/software/radigest/internal/enzyme/pattern.go resources/software/radigest/internal/enzyme/pattern_test.go resources/software/radigest/internal/fasta/fasta.go resources/software/radigest/internal/fasta/fasta_test.go resources/software/radigest/internal/fasta/stdin_test.go resources/software/radigest/internal/fragmentfasta/fragmentfasta.go resources/software/radigest/internal/fragmentfasta/fragmentfasta_test.go resources/software/radigest/internal/fragmenttsv/fragmenttsv.go resources/software/radigest/internal/fragmenttsv/fragmenttsv_test.go resources/software/radigest/internal/gff/escape.go resources/software/radigest/internal/gff/escape_test.go resources/software/radigest/internal/gff/gff.go resources/software/radigest/internal/gff/gff_test.go resources/software/radigest/internal/sim/sim.go resources/software/radigest/internal/sim/sim_test.go resources/software/radigest/internal/sizeselect/sizeselect.go resources/software/radigest/internal/sizeselect/sizeselect_test.go resources/software/radigest/scripts/README.md resources/software/radigest/scripts/radigest-fit-size-model resources/software/radigest/scripts/radigest-rank-pairs resources/software/radigest/scripts/radigest-screen-pairs; do
+            sha256sum "$f"
+          done | LC_ALL=C sort
+        } > "results/provenance/radigest.source_tree.sha256"
+        
+Select jobs to execute...
+[Sat May 23 22:14:41 2026]
+Finished jobid: 3 (Rule: radigest_source_tree_sha256)
+5 of 12 steps (42%) done
+Execute 1 jobs...
+
+[Sat May 23 22:14:41 2026]
+localrule directory_manifest:
+    output: results/provenance/directory_manifest.txt
+    jobid: 10
+    reason: Forced execution
+    resources: tmpdir=/tmp
+Shell command: 
+        set -euo pipefail
+        {
+          date -u +"# generated_utc	%Y-%m-%dT%H:%M:%SZ"
+          printf '# root\t%s\n' "$PWD"
+          printf '# format\tproject_relative_directory\n'
+          find config envs metadata workflow resources results \
+            -path '*/.git' -prune -o -type d -print | LC_ALL=C sort
+        } > "results/provenance/directory_manifest.txt"
+        
+[Sat May 23 22:14:41 2026]
+Finished jobid: 10 (Rule: directory_manifest)
+6 of 12 steps (50%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat May 23 22:14:41 2026]
+localrule radigest_source_revision:
+    input: resources/software/radigest/SOURCE_REVISION.txt
+    output: results/provenance/radigest.source_revision.txt
+    jobid: 2
+    reason: Forced execution
+    resources: tmpdir=/tmp
+Shell command: 
+        set -euo pipefail
+        {
+          date -u +"generated_utc=%Y-%m-%dT%H:%M:%SZ"
+          printf 'configured_version\t%s\n' "v0.2.0"
+          printf 'configured_commit\t%s\n' "8d27bdf10e4d009a30c2c4e865a44807c6a15146"
+          printf 'source_revision_file\t%s\n' "resources/software/radigest/SOURCE_REVISION.txt"
+          echo
+          cat "resources/software/radigest/SOURCE_REVISION.txt"
+        } > "results/provenance/radigest.source_revision.txt"
+        
+[Sat May 23 22:14:41 2026]
+Finished jobid: 2 (Rule: radigest_source_revision)
+7 of 12 steps (58%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat May 23 22:14:41 2026]
+localrule input_checksums:
+    input: metadata/expected_inputs.txt, workflow/scripts/write_input_checksums.py, config/config.yaml, envs/environment.yml, resources/references/trichoderma/ref.fa.gz, resources/references/salmon/ref.fa.gz, resources/enzymes/candidate_enzymes.txt, metadata/trichoderma.samples.tsv, metadata/salmon.samples.tsv, metadata/empirical_pairs.tsv, metadata/read_lengths.tsv, metadata/size_windows.tsv
+    output: results/provenance/input_checksums.sha256
+    jobid: 7
+    reason: Forced execution
+    resources: tmpdir=/tmp
+Shell command: python3 workflow/scripts/write_input_checksums.py --inputs metadata/expected_inputs.txt --out results/provenance/input_checksums.sha256
+Select jobs to execute...
+[Sat May 23 22:14:44 2026]
+Finished jobid: 7 (Rule: input_checksums)
+8 of 12 steps (67%) done
+Execute 1 jobs...
+
+[Sat May 23 22:14:44 2026]
+localrule radigest_version:
+    input: resources/software/radigest/bin/radigest
+    output: results/provenance/radigest.version.txt
+    jobid: 4
+    reason: Forced execution
+    resources: tmpdir=/tmp
+Shell command: resources/software/radigest/bin/radigest -version > results/provenance/radigest.version.txt
+[Sat May 23 22:14:44 2026]
+Finished jobid: 4 (Rule: radigest_version)
+9 of 12 steps (75%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat May 23 22:14:44 2026]
+localrule workflow_config_snapshot:
+    input: config/config.yaml
+    output: results/provenance/workflow_config.yaml
+    jobid: 8
+    reason: Forced execution
+    resources: tmpdir=/tmp
+Shell command: cp config/config.yaml results/provenance/workflow_config.yaml
+[Sat May 23 22:14:44 2026]
+Finished jobid: 8 (Rule: workflow_config_snapshot)
+10 of 12 steps (83%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat May 23 22:14:44 2026]
+localrule conda_lock:
+    input: envs/environment.yml
+    output: conda-lock.yml, results/provenance/conda_lock.log
+    jobid: 11
+    reason: Forced execution
+    resources: tmpdir=/tmp
+Shell command: conda-lock -f envs/environment.yml -p linux-64 --lockfile conda-lock.yml > results/provenance/conda_lock.log 2>&1
+[Sat May 23 22:15:00 2026]
+Finished jobid: 11 (Rule: conda_lock)
+11 of 12 steps (92%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat May 23 22:15:00 2026]
+localrule all:
+    input: results/provenance/go_test.log, results/provenance/radigest.source_revision.txt, results/provenance/radigest.source_tree.sha256, results/provenance/radigest.version.txt, results/provenance/supported_enzymes.txt, results/provenance/candidate_enzymes.check.tsv, results/provenance/input_checksums.sha256, results/provenance/workflow_config.yaml, results/provenance/software_versions.txt, results/provenance/directory_manifest.txt, conda-lock.yml, results/provenance/conda_lock.log
+    jobid: 0
+    reason: Forced execution
+    resources: tmpdir=/tmp
+Shell command: None
+[Sat May 23 22:15:00 2026]
+Finished jobid: 0 (Rule: all)
+12 of 12 steps (100%) done
+Complete log(s): /home/ericksam/radigest-manuscript/.snakemake/log/2026-05-23T221436.199348.snakemake.log

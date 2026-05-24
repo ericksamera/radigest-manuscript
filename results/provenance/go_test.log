@@ -1,0 +1,81 @@
+generated_utc=2026-05-24T05:14:36Z
+snapshot_dir=/home/ericksam/radigest-manuscript/resources/software/radigest
+vendored_source_version=v0.2.0
+vendored_source_commit=8d27bdf10e4d009a30c2c4e865a44807c6a15146
+conda_prefix=/home/ericksam/.conda/envs/radigest-manuscript
+python=/home/ericksam/.conda/envs/radigest-manuscript/bin/python3
+go=/home/ericksam/.conda/envs/radigest-manuscript/bin/go
+snakemake=/home/ericksam/.conda/envs/radigest-manuscript/bin/snakemake
+
+[tool_versions]
+Python 3.11.15
+go version go1.22.12 linux/amd64
+9.21.0
+
+[go_env]
+GO111MODULE=''
+GOARCH='amd64'
+GOBIN=''
+GOCACHE='/home/ericksam/.cache/go-build'
+GOENV='/home/ericksam/.config/go/env'
+GOEXE=''
+GOEXPERIMENT=''
+GOFLAGS=''
+GOHOSTARCH='amd64'
+GOHOSTOS='linux'
+GOINSECURE=''
+GOMODCACHE='/home/ericksam/go/pkg/mod'
+GONOPROXY=''
+GONOSUMDB=''
+GOOS='linux'
+GOPATH='/home/ericksam/go'
+GOPRIVATE=''
+GOPROXY='https://proxy.golang.org,direct'
+GOROOT='/home/ericksam/.conda/envs/radigest-manuscript/go'
+GOSUMDB='sum.golang.org'
+GOTMPDIR=''
+GOTOOLCHAIN='local'
+GOTOOLDIR='/home/ericksam/.conda/envs/radigest-manuscript/go/pkg/tool/linux_amd64'
+GOVCS=''
+GOVERSION='go1.22.12'
+GCCGO='gccgo'
+GOAMD64='v1'
+AR='ar'
+CC='x86_64-conda-linux-gnu-cc'
+CXX='x86_64-conda-linux-gnu-c++'
+CGO_ENABLED='0'
+GOMOD='/home/ericksam/radigest-manuscript/resources/software/radigest/go.mod'
+GOWORK=''
+CGO_CFLAGS='-O2 -g'
+CGO_CPPFLAGS=''
+CGO_CXXFLAGS='-O2 -g'
+CGO_FFLAGS='-O2 -g'
+CGO_LDFLAGS='-O2 -g'
+PKG_CONFIG='pkg-config'
+GOGCCFLAGS='-fPIC -m64 -fno-caret-diagnostics -Qunused-arguments -Wl,--no-gc-sections -fmessage-length=0 -ffile-prefix-map=/tmp/go-build1852183451=/tmp/go-build -gno-record-gcc-switches'
+
+[go_generate]
+generated enzymes_generated.go with 153 enzymes
+go_generate_clean=OK
+
+[make_clean]
+rm -rf bin
+
+[make_build]
+mkdir -p bin
+go build -trimpath -ldflags "-s -w -X main.version=v0.2.0" -o bin/radigest ./cmd/radigest
+cp scripts/radigest-screen-pairs scripts/radigest-rank-pairs scripts/radigest-fit-size-model bin/
+chmod 0755 bin/radigest bin/radigest-screen-pairs bin/radigest-rank-pairs bin/radigest-fit-size-model
+
+[go_test]
+?   	github.com/ericksamera/radigest/internal/enzyme/cmd/gen	[no test files]
+ok  	github.com/ericksamera/radigest/cmd/radigest	0.025s
+ok  	github.com/ericksamera/radigest/internal/collector	0.006s
+ok  	github.com/ericksamera/radigest/internal/digest	0.004s
+ok  	github.com/ericksamera/radigest/internal/enzyme	0.004s
+ok  	github.com/ericksamera/radigest/internal/fasta	0.027s
+ok  	github.com/ericksamera/radigest/internal/fragmentfasta	0.005s
+ok  	github.com/ericksamera/radigest/internal/fragmenttsv	0.005s
+ok  	github.com/ericksamera/radigest/internal/gff	0.004s
+ok  	github.com/ericksamera/radigest/internal/sim	0.006s
+ok  	github.com/ericksamera/radigest/internal/sizeselect	0.004s

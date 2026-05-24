@@ -1,0 +1,10 @@
+# Placeholder candidate panel.
+# Freeze the final candidate set before any real screening.
+EcoRI
+MseI
+PstI
+MspI
+ApeKI
+NlaIII
+MluCI
+BfaI

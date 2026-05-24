@@ -1,0 +1,3 @@
+Locking dependencies for ['linux-64']...
+INFO:conda_lock.conda_solver:linux-64 using specs ['python 3.11.*', 'pip', 'snakemake-minimal >=9,<10', 'conda-lock >=2,<3', 'pyyaml >=6,<7', 'go 1.22.*', 'make', 'git', 'rsync', 'coreutils', 'jq', 'pigz', 'pandas >=2.2,<3', 'numpy >=1.26,<3', 'scipy >=1.13,<2', 'matplotlib >=3.8,<4', 'samtools >=1.20,<2', 'bwa-mem2 >=2.2,<3', 'fastp >=0.24,<1', 'bbmap >=39,<40', 'hyperfine >=1.18,<2']
+ - Install lock using: conda-lock install --name YOURENV conda-lock.yml
