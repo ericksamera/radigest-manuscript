@@ -15,6 +15,7 @@ RADIGEST_HELPERS = [
 ]
 
 RADIGEST_SOURCE_TREE_SHA256 = "results/provenance/radigest.source_tree.sha256"
+SOFTWARE_VALIDATION_TABLE = "results/tables/software_validation.tsv"
 
 PROVENANCE = [
     config["provenance"]["go_test_log"],
@@ -80,7 +81,7 @@ def radigest_source_files(wildcards):
 
 rule all:
     input:
-        PROVENANCE + OPTIONAL_LOCK
+        PROVENANCE + OPTIONAL_LOCK + [SOFTWARE_VALIDATION_TABLE]
 
 
 rule radigest_source_revision:
@@ -278,3 +279,6 @@ rule conda_lock:
         log="results/provenance/conda_lock.log"
     shell:
         "conda-lock -f {input} -p linux-64 --lockfile {output.lockfile} > {output.log} 2>&1"
+
+
+include: "workflow/rules/validation.smk"

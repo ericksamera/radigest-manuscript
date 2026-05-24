@@ -54,6 +54,20 @@ systems:
     score_range_bp:
       min: null
       max: null
+validation:
+  toy_fasta: resources/validation/toy.fa
+  expected_toy_double_gff3: resources/validation/expected.toy.double.gff3
+  # Use the manuscript salmon reference for thread-count reproducibility.
+  # This file is an untracked immutable biological input; override locally if needed.
+  reproducibility_reference_fasta: resources/references/salmon/ref.fa.gz
+  reproducibility_enzymes: PstI,MspI
+  hard_size_window_bp:
+    min: 300
+    max: 600
+  score_range_bp:
+    min: 1
+    max: 2000
+
 provenance:
   go_test_log: results/provenance/go_test.log
   radigest_source_revision: results/provenance/radigest.source_revision.txt
@@ -64,11 +78,11 @@ provenance:
   software_versions: results/provenance/software_versions.txt
   directory_manifest: results/provenance/directory_manifest.txt
 analysis_scope:
-  digest_validation: false
+  digest_validation: true
   screening: false
   tlen_extraction: false
   model_fitting: false
   transfer_analysis: false
   benchmarking: false
-  tables: false
+  tables: true
   figures: false

@@ -30,6 +30,12 @@ resources/raw_reads/**/*.fq.gz
 resources/raw_reads/**/*.fastq
 resources/raw_reads/**/*.fastq.gz
 
+
+# Stage 2 software-validation toy inputs and golden outputs are intentionally tracked.
+!resources/validation/
+!resources/validation/toy.fa
+!resources/validation/expected.toy.double.gff3
+
 # Reference indexes and mapping sidecars
 resources/references/**/*.amb
 resources/references/**/*.ann

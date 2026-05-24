@@ -6,6 +6,8 @@ envs/environment.yml
 resources/references/trichoderma/ref.fa.gz
 resources/references/salmon/ref.fa.gz
 resources/enzymes/candidate_enzymes.txt
+resources/validation/toy.fa
+resources/validation/expected.toy.double.gff3
 metadata/trichoderma.samples.tsv
 metadata/salmon.samples.tsv
 metadata/empirical_pairs.tsv
